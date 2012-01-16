@@ -1,0 +1,5 @@
+11 Jan 2012 18:13:00,284 INFO  ~ Starting /Users/digilord/projects/dns_manager
+11 Jan 2012 18:13:00,647 WARN  ~ You're running Play! in DEV mode
+11 Jan 2012 18:13:00,711 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+11 Jan 2012 18:13:36,359 INFO  ~ Connected to jdbc:h2:mem:play;MODE=MYSQL;LOCK_MODE=0
+11 Jan 2012 18:13:36,817 INFO  ~ Application 'dns_manager' is now started !

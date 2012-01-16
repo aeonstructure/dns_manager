@@ -1,0 +1,30 @@
+#{set 'moreScripts'}
+	#{script 'models/a_record.js' /}
+#{/set}
+
+<form data-bind="submit: addA_Record">
+	<input data-bind="value: new_a_record_hostname" placeholder="hostname" />
+	<input data-bind="value: new_a_record_ipv4_address" placeholder="127.0.0.1" />
+	<input data-bind="value: domain_id" value="${domain.id}" type="hidden" />
+    <button type="submit">Add</button>
+</form>
+
+<ul data-bind="foreach: a_records">
+    <li>
+        <input data-bind="value: hostname, valueUpdate: 'afterkeydown', event: { blur: $parent.saveA_Record }" />
+		<input data-bind="value: ipv4_address, valueUpdate: 'afterkeydown', event: { blur: $parent.saveA_Record }" />
+        <a href="#" data-bind="click: $parent.removeA_Record">Delete</a>
+    </li> 
+</ul>
+
+
+<script type="text/javascript">
+
+var domain_id = '${domain.id}';
+
+ko.applyBindings(new A_RecordViewModel());
+
+</script>
+
+
+   

@@ -1,0 +1,70 @@
+#{extends 'main.html' /}
+#{set title:'Edit DNS Records for ' + domain.name /}
+
+
+<div class='form_wrapper domain_form_wrapper'>
+	
+<form action="${domain.resource_url}" method="POST" accept-charset="utf-8" enctype="multipart/form-data" id="DomainForm">
+#{authenticityToken /}
+
+<input type='hidden' name='domain.id' value='${domain?.id}'>
+
+<div class='form_field domain_field'>
+	<label for='name'>Domain Name:</label>
+	<input type='text' id='name' name='domain.name' value='${domain?.name}'/>
+</div>
+#{ifErrors}
+<span class='form_field_error'>${errors.forKey('domain.name')}</span>
+#{/ifErrors}
+
+
+<div class='form_field domain_field'>
+	<label for='responsible_party'>Responsible Party:</label>
+	<input type='text' id='responsible_party' name='domain.responsible_party' value='${domain?.responsible_party}'/>
+</div>
+#{ifErrors}
+<span class='form_field_error'>${errors.forKey('domain.responsible_party')}</span>
+#{/ifErrors}
+
+
+<div class='form_field domain_field'>
+	<label for='serial_number'>Serial Number:</label>
+	<input type='text' id='serial_number' name='domain.serial_number' value='${domain?.serial_number}'/>
+</div>
+#{ifErrors}
+<span class='form_field_error'>${errors.forKey('domain.serial_number')}</span>
+#{/ifErrors}
+
+
+<div class='form_field domain_field'>
+	<label for='refresh_time'>Refresh Time:</label>
+	<input type='text' id='refresh_time' name='domain.refresh_time' value='${domain?.refresh_time}'/>
+</div>
+#{ifErrors}
+<span class='form_field_error'>${errors.forKey('domain.refresh_time')}</span>
+#{/ifErrors}
+
+
+<div class='form_field domain_field'>
+	<label for='retry_time'>Retry Time:</label>
+	<input type='text' id='retry_time' name='domain.retry_time' value='${domain?.retry_time}'/>
+</div>
+#{ifErrors}
+<span class='form_field_error'>${errors.forKey('domain.retry_time')}</span>
+#{/ifErrors}
+
+
+<div class='form_actions_wrapper'>
+	<div class='form_actions'>
+		<a class='form_button cancel' href='@{Domains.index}'>Cancel</a>
+		<input class='form_button apply' type='submit' value='apply' id='DomainApply'/>
+	</div>
+</div>
+
+</form>
+</div>
+
+<div id='a_records' class='list'>
+	#{include 'domains/record_types/a_record.html' /}
+</div>
+

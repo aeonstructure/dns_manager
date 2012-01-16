@@ -1,0 +1,64 @@
+body {
+	width: 100%;
+}
+
+.form_wrapper {
+	display: block;
+	width: 524px;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 1em;
+}
+
+.form_field {
+	width: 512px;
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.form_field label {
+	width: 160px;
+	display: inline-block;
+	text-align: right;
+	margin-right: 8px;
+}
+
+.form_field input[type="text"] {
+	width: 332px;
+	display: inline-block;
+}
+
+.form_field_error {
+	clear: both;
+	float: right;
+	display: inline-block;
+	width: 326px;
+	text-align: right;
+	margin-right: 14px;
+	background: #dc0235;
+	line-height: 24px;
+	padding-right: 12px;
+	color: #fff;
+	margin-bottom: 12px;
+	background: -moz-linear-gradient(top,  #dc0235 0%, #c7012f 44%, #a40021 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dc0235), color-stop(44%,#c7012f), color-stop(100%,#a40021));
+	background: -webkit-linear-gradient(top,  #dc0235 0%,#c7012f 44%,#a40021 100%);
+	background: -o-linear-gradient(top,  #dc0235 0%,#c7012f 44%,#a40021 100%);
+	background: -ms-linear-gradient(top,  #dc0235 0%,#c7012f 44%,#a40021 100%);
+	background: linear-gradient(top,  #dc0235 0%,#c7012f 44%,#a40021 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dc0235', endColorstr='#a40021',GradientType=0 );
+}
+
+.delete_button {
+	display: inline-block;
+	height: 24px;
+	width: 24px;
+	background-color: red;
+}
+
+
+
+
+
