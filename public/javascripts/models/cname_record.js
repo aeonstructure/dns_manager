@@ -12,24 +12,24 @@ function Validation(data, obj) {
 }
 
 
-function A_Record(data) {
+function CNAME_Record(data) {
 	var self = this;
     this.hostname = ko.observable(data.hostname);
-    this.ipv4_address = ko.observable(data.ipv4_address);
+    this.target = ko.observable(data.target);
 	this.domain_id = ko.observable(domain_id);
 	this.id = ko.observable(data.id);
 	
 	this.fieldNames = {
 			hostname: "Hostname",
-			ipv4_address: "IPv4 Address",
+			target: "Target",
 	}
 	
 	this.create = function(){
-		var ko_json = ko.toJSON({'a_record': this});
+		var ko_json = ko.toJSON({'cname_record': this});
 		var json_object = JSON.parse(ko_json);
-		var url = "/a_records";
+		var url = "/cname_records";
 		$.ajax({
-			url: "/a_records",
+			url: "/cname_records",
 			type: "POST",
 			dataType: "json",
 			data: json_object,
@@ -38,7 +38,7 @@ function A_Record(data) {
 			},
 			error: function(data) {
 				var response = JSON.parse(data.responseText);
-				var msg = "There was a validation error for your A Record.\n";
+				var msg = "There was a validation error for your CNAME Record.\n";
 				$.each(response, function(k,v){
 					var validation = new Validation(k, self);
 					msg = msg + validation.required() + '\n';
@@ -50,9 +50,9 @@ function A_Record(data) {
 	}
 	
 	this.update = function(){
-		var ko_json = ko.toJSON({'a_record': this});
+		var ko_json = ko.toJSON({'cname_record': this});
 		var json_object = JSON.parse(ko_json);
-		var resource_url = "/a_records/" + this.id();
+		var resource_url = "/cname_records/" + this.id();
 		$.ajax({
 			url: resource_url,
 			type: "PUT",
@@ -65,7 +65,7 @@ function A_Record(data) {
 	}
 	
 	this.destroy = function(){
-		var resource_url = "/a_records/" + this.id();
+		var resource_url = "/cname_records/" + this.id();
 		$.ajax({
 			url: resource_url,
 			type: "DELETE",
@@ -74,34 +74,34 @@ function A_Record(data) {
 	
 }
 
-function A_RecordViewModel() {
+function CNAME_RecordViewModel() {
     // Data
     var self = this;
-    self.a_records = ko.observableArray([]);
-    self.new_a_record = ko.observable();
-	self.new_a_record_hostname = ko.observable();
-	self.new_a_record_ipv4_address = ko.observable();
+    self.cname_records = ko.observableArray([]);
+    self.new_cname_record = ko.observable();
+	self.new_cname_record_hostname = ko.observable();
+	self.new_cname_record_target = ko.observable();
 	self.domain_id = ko.observable();
 	
 	self.sort_records = function() {
-		self.a_records.sort(function(first, last){
+		self.cname_records.sort(function(first, last){
 			return first.hostname() == last.hostname() ? 0 : (first.hostname() < last.hostname() ? -1 : 1)
 		});
 	}
 	
     // Operations
-    self.addA_Record = function() {
-		var a_record = new A_Record({
-			hostname: this.new_a_record_hostname(),
-			ipv4_address: this.new_a_record_ipv4_address(),
+    self.addCNAME_Record = function() {
+		var cname_record = new CNAME_Record({
+			hostname: this.new_cname_record_hostname(),
+			target: this.new_cname_record_target(),
 			domain_id: this.domain_id()
 		});
 		
-		var create_response = a_record.create();
+		var create_response = cname_record.create();
 		//if(create_response == true) {
-	        self.a_records.push(a_record);
-	        self.new_a_record_hostname("");
-			self.new_a_record_ipv4_address("");
+	        self.cname_records.push(cname_record);
+	        self.new_cname_record_hostname("");
+			self.new_cname_record_target("");
 			//} else {
 			console.log(create_response);
 			//}
@@ -109,19 +109,19 @@ function A_RecordViewModel() {
 		self.sort_records();
     };
 	
-	self.saveA_Record = function(a_record) {
-		a_record.update();
+	self.saveCNAME_Record = function(cname_record) {
+		cname_record.update();
 	}
 	
-    self.removeA_Record = function(a_record) { 
-		self.a_records.remove(a_record);
-		a_record.destroy();
+    self.removeCNAME_Record = function(cname_record) { 
+		self.cname_records.remove(cname_record);
+		cname_record.destroy();
 	};
 
     // Load initial state from server, convert it to Task instances, then populate self.tasks
-    $.getJSON("/domains/"+ domain_id + "/a_records", function(allData) {
-        var mappedA_Records = $.map(allData, function(item) { return new A_Record(item) });
-        self.a_records(mappedA_Records);
+    $.getJSON("/domains/"+ domain_id + "/cname_records", function(allData) {
+        var mappedCNAME_Records = $.map(allData, function(item) { return new CNAME_Record(item) });
+        self.cname_records(mappedCNAME_Records);
 		self.sort_records();
 	});
 }

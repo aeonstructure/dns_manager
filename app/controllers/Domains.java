@@ -45,6 +45,8 @@ public class Domains extends Application {
 	}
 	
     public static void destroy(Long id) {
+        Domain domain = Domain.findById(id);
+        domain.delete();
         
     }
 	
@@ -55,6 +57,15 @@ public class Domains extends Application {
         a_records = domain.a_records;
         renderJSON(A_Record.listToJsonString(a_records));
 	}
+	
+	public static void cname_records(Long id) {
+        List<CNAME_Record> cname_records;
+        Domain domain;
+        domain = Domain.findById(id);
+        cname_records = domain.cname_records;
+        renderJSON(CNAME_Record.listToJsonString(cname_records));
+	}
+	
 	
 	public static void all_json() {
         List<Domain> domains;

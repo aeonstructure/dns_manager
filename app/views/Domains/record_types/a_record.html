@@ -1,4 +1,5 @@
 #{set 'moreScripts'}
+	#{get 'moreScripts' /}
 	#{script 'models/a_record.js' /}
 #{/set}
 
@@ -22,7 +23,7 @@
 
 var domain_id = '${domain.id}';
 
-ko.applyBindings(new A_RecordViewModel());
+ko.applyBindings(new A_RecordViewModel(), document.getElementById("a_records"));
 
 </script>
 

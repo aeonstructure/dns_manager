@@ -35,4 +35,8 @@ public class Domain extends LightSerializedModel {
 	
     @OneToMany(cascade=CascadeType.ALL, mappedBy="domain")
     public List<A_Record> a_records;
+	
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="domain")
+    public List<CNAME_Record> cname_records;
+	
 }
