@@ -66,6 +66,14 @@ public class Domains extends Application {
         renderJSON(CNAME_Record.listToJsonString(cname_records));
 	}
 	
+	public static void mx_records(Long id) {
+        List<MX_Record> mx_records;
+        Domain domain;
+        domain = Domain.findById(id);
+        mx_records = domain.mx_records;
+        renderJSON(CNAME_Record.listToJsonString(mx_records));
+	}
+	
 	
 	public static void all_json() {
         List<Domain> domains;
