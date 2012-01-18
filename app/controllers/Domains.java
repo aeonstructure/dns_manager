@@ -13,7 +13,7 @@ public class Domains extends Application {
 
     public static void index() {
 		List<Domain> domains = Domain.findAll();
-        render(domains);
+		renderJSON(Domain.listToJsonString(domains));
     }
 	
 	public static void create() {

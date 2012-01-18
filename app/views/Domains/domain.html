@@ -1,32 +1,26 @@
-#{set 'moreScripts'}
-	#{script 'models/domain.js' /}
-#{/set}
+<div id='domain_wrapper' class="stuff_wrapper">
 
-<form data-bind="submit: addDomain">
-	<input data-bind="value: new_domain_name" placeholder="yourdomain.com" />
-	<input data-bind="value: new_domain_responsible_party" placeholder="someone@yourdomain.com" />
-	<input data-bind="value: new_domain_refresh_time" placeholder="3600" />
-	<input data-bind="value: new_domain_retry_time" placeholder="86400" />
-	
-    <button type="submit">Add</button>
-</form>
+	<div id="ADDFORM">
+	</div>
 
-<ul data-bind="foreach: domains">
-    <li>
-        <input data-bind="value: name, valueUpdate: 'afterkeydown', event: { blur: $parent.saveDomain }" />
-		<input data-bind="value: responsible_party, valueUpdate: 'afterkeydown', event: { blur: $parent.saveDomain }" />
-		<span data-bind="text: serial_number"></span>
-		<input data-bind="value: refresh_time, valueUpdate: 'afterkeydown', event: { blur: $parent.saveDomain }" />
-		<input data-bind="value: retry_time, valueUpdate: 'afterkeydown', event: { blur: $parent.saveDomain }" />
-		
-        <a href="#" data-bind="click: $parent.removeDomain">Delete</a> |
-        <a href="#" data-bind="click: $parent.editRecords">Edit Records</a>
-    </li> 
-</ul>
+	<div id="LIST">
+	</div>
 
+</div>
 
-<script type="text/javascript">
+<script>
+var DomainRecordModel = new Aeon.UI.Model();
+DomainRecordModel.fields = [
+    'retry_time',
+    'refresh_time',
+    'serial_number',
+	'responsible_party',
+	'name',
+	'id'
+];
+DomainRecordModel.container = $("#domain_wrapper");
+DomainRecordModel.class_name = "domain";
+DomainRecordModel.name = "DomainRecordModel";
 
-ko.applyBindings(new DomainViewModel());
-
+DomainRecordModel.init();
 </script>

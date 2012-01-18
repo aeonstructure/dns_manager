@@ -1,4 +1,7 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
 
-<a href='@{Domains.index}'>Domains</a>
+<div id='domains' class='list'>
+	<h1>Domains</h1>
+	#{include 'domains/domain.html' /}
+</div>
