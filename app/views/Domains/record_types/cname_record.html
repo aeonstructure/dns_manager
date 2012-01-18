@@ -8,17 +8,20 @@
 
 </div>
 
+<button onClick='CnameRecordModel.load()'>Reload</button>
+
 <script>
 var CnameRecordModel = new Aeon.UI.Model();
-CnameRecordModel.fields = [
-	'target',
-	'hostname',
-	'id'
-];
+CnameRecordModel.fields = {
+	'target': {},
+	'hostname': {},
+	'id': {type: 'hidden'},
+	'domain_id': {type: 'hidden', value: '${domain.id}'}
+};
+
 CnameRecordModel.container = $("#cname_wrapper");
 CnameRecordModel.base_url = "/domains/${domain.id}";
 CnameRecordModel.class_name = "cname_record";
-CnameRecordModel.name = "CnameRecordModel";
 
 CnameRecordModel.init();
 </script>

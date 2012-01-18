@@ -10,16 +10,15 @@
 
 <script>
 var ARecordModel = new Aeon.UI.Model();
-ARecordModel.fields = [
-	'target',
-	'hostname',
-	'id'
-];
+ARecordModel.fields = {
+	'ipv4_address': {},
+	'hostname': {},
+	'id': {type: 'hidden'},
+	'domain_id': {type: 'hidden', value: '${domain.id}'}
+};
 ARecordModel.container = $("#a_wrapper");
 ARecordModel.base_url = "/domains/${domain.id}";
 ARecordModel.class_name = "a_record";
-ARecordModel.name = "ARecordModel";
-
 
 ARecordModel.init();
 </script>

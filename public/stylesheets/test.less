@@ -1,0 +1,64 @@
+@soft-grey: #a2a2a2;
+
+.no-select {
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+.aeon-shadow(@x:0px, @y:0px, @spread:10px, @color:#8b8b8b) {
+	-webkit-box-shadow: @x @y @spread @color;
+}
+
+.aeon-round-top(@radius) {
+	-webkit-border-top-left-radius:@radius;
+	-webkit-border-top-right-radius:@radius;
+}
+
+.aeon-round-bottom(@radius) {
+	-webkit-border-bottom-left-radius:@radius;
+	-webkit-border-bottom-right-radius:@radius;
+}
+
+.aeon-round-left(@radius) {
+	-webkit-border-top-left-radius:@radius;
+	-webkit-border-bottom-left-radius:@radius;
+}
+
+.aeon-round-right(@radius) {
+	-webkit-border-top-right-radius:@radius;
+	-webkit-border-bottom-right-radius:@radius;
+}
+
+.aeon-round(@radius) {
+	.aeon-round-top(@radius);
+	.aeon-round-bottom(@radius);
+}
+
+.center-margins {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.button {
+	.aeon-round(5px);
+	.no-select;
+	border-top: 1px solid #8c9197;
+	border-right: 1px solid #a3a6ac;
+	border-bottom: 1px solid #bdc0c6;
+	border-left: 1px solid #a3a6ac;
+
+
+	max-width: 200px;
+	min-width: 50px;
+	text-align: center;
+	font-size: 12px;
+	font-weight: bold;
+	padding-right: 6px;
+	padding-left: 6px;
+	margin-left: 2px;
+    color: #4d4d4d !important;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f4f4f4), to(#d8d8d8));
+}

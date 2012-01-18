@@ -5,20 +5,25 @@
         <title>#{get 'title' /}</title>
         <meta charset="${_response_encoding}">
         <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+        <link rel="stylesheet/less" media="screen" href="@{'/public/stylesheets/test.less'}">
+        
         #{get 'moreStyles' /}
         <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
         <script src="@{'/public/javascripts/jquery-1.6.4.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 		<script src="@{'/public/javascripts/json2.js'}" type="text/javascript" charset="${_response_encoding}"></script>
-		<script src="@{'/public/javascripts/knockout-2.0.0.js'}" type="text/javascript" charset="${_response_encoding}"></script>
-		<script src="@{'/public/javascripts/ember-0.9.3.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+		#{script 'less-1.2.0.min.js' /}
 		#{script 'utils.js' /}
+		#{script 'aeon.js' /}
+		#{script 'aeon-ui.js' /}
 		#{script 'aeon-ui-model.js' /}
     	
         #{get 'moreScripts' /}
     </head>
     <body>
       <div class='header'>
-        <a target='_blank' href='/@db'>Database Access</a> | <a href='/@documentation/home'>Documentation</a> | <a href='/@tests'>Tests</a> | <a href='/'>Domain List</a>
+        <a target='_blank' href='/@db'>Database Access</a> | <a href='/@documentation/home'>Documentation</a> | 
+        <a href='/@tests'>Tests</a> | <a href='/'>Domain List</a> | <a href='#!watch'>Watch CSS</a>
+        | <a href='#!unwatch'>UnWatch CSS</a>
       </div>
         #{doLayout /}
     </body>

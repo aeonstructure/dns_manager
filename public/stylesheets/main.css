@@ -62,6 +62,15 @@ body {
 	background-color: red;
 }
 
+.serial_number_span {
+    width: 129px;
+    display: inline-block;
+}
+
+.center_text {
+    text-align: center;
+}
+
 
 
 

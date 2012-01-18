@@ -10,17 +10,15 @@
 
 <script>
 var MxRecordModel = new Aeon.UI.Model();
-MxRecordModel.fields = [
-	'target',
-	'priority',
-	'hostname',
-	'id'
-];
+MxRecordModel.fields = {
+	'target': {domElement: 'input'},
+	'priority': {domElement: 'input'},
+	'hostname': {domElement: 'input'},
+	'id': {type: 'hidden'},
+	'domain_id': {type: 'hidden', value: '${domain.id}'}
+};
 MxRecordModel.container = $("#mx_wrapper");
 MxRecordModel.base_url = "/domains/${domain.id}";
 MxRecordModel.class_name = "mx_record";
-MxRecordModel.name = "MxRecordModel";
-
-
 MxRecordModel.init();
 </script>

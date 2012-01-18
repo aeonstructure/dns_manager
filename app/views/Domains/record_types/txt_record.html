@@ -1,0 +1,24 @@
+<div id='txt_wrapper' class="stuff_wrapper">
+
+	<div id="ADDFORM">
+	</div>
+
+	<div id="LIST">
+	</div>
+
+</div>
+
+<script>
+var TxtRecordModel = new Aeon.UI.Model();
+TxtRecordModel.fields = {
+	'text': {},
+	'hostname': {},
+	'id': {type: 'hidden'},
+	'domain_id': {type: 'hidden', value: '${domain.id}'}
+};
+TxtRecordModel.container = $("#txt_wrapper");
+TxtRecordModel.base_url = "/domains/${domain.id}";
+TxtRecordModel.class_name = "txt_record";
+
+TxtRecordModel.init();
+</script>

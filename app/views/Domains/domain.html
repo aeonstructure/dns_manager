@@ -10,17 +10,17 @@
 
 <script>
 var DomainRecordModel = new Aeon.UI.Model();
-DomainRecordModel.fields = [
-    'retry_time',
-    'refresh_time',
-    'serial_number',
-	'responsible_party',
-	'name',
-	'id'
-];
+DomainRecordModel.fields = {
+    'retry_time': {css_class: 'retry'},
+    'refresh_time': {},
+    'serial_number': {domElement: 'span', css_class: 'serial_number_span center_text'},
+	'responsible_party': {},
+	'name': {},
+	'id': {type: 'hidden'}
+};
+DomainRecordModel.actions = {delete: true, edit: true};
 DomainRecordModel.container = $("#domain_wrapper");
 DomainRecordModel.class_name = "domain";
-DomainRecordModel.name = "DomainRecordModel";
 
 DomainRecordModel.init();
 </script>
