@@ -2,6 +2,10 @@ body {
 	width: 100%;
 }
 
+.inline-block {
+	display: inline-block;
+}
+
 .form_wrapper {
 	display: block;
 	width: 524px;
