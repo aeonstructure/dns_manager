@@ -18,165 +18,185 @@ function createUUID() {
     var uuid = s.join("");
     return uuid;
 }
-	
-var fields = [
+
+Aeon = window.Aeon || {};
+
+Aeon.UI = window.Aeon.UI || {};
+
+Aeon.UI.Model = window.Aeon.UI.Model || {};
+
+Aeon.UI.Model = function(){
+    var self        = this;
+    this.fields     = null;
+    
+    this.new_record_form = function (){
+        var fields = this.fields;
+        var new_record_form = $("<div></div>");
+        var new_record_uuid = "aeon_" + createUUID();
+
+        new_record_form.attr("id", new_record_uuid);
+        new_record_form.attr("resource_url", "/cname_records");
+        new_record_form.attr("class_name", "cname_record");
+
+        for (var i=fields.length; i--;) {
+        	var input_wrapper = $('<input/>');
+        	input_wrapper.attr("key", fields[i]);
+        	input_wrapper.attr("placeholder", fields[i]);
+        	if(fields[i] == "id"){
+        		input_wrapper.attr("type", "hidden");
+        	} else {
+        		input_wrapper.attr("type", "text");
+        	}
+        	$(new_record_form).append(input_wrapper);
+        }
+        var domain_id_input = $('<input/>');
+        domain_id_input.attr("key", "domain_id");
+        domain_id_input.attr("value", "${domain.id}");
+        domain_id_input.attr("type", "hidden");
+        $(new_record_form).append(domain_id_input);
+
+        var new_record_button = $("<button></button>");
+        new_record_button.text("Add");
+        new_record_button.attr("onClick", "add_record('" + new_record_uuid + "')");
+        $(new_record_form).append(new_record_button);
+        
+        return new_record_form;
+    }
+    
+    this.add_record = function(ui_id){
+    	var ui_model = $('#' + ui_id);
+    	var resource_url = ui_model.attr("resource_url");
+    	var record = build_json(ui_model);
+
+    	console.log(record);
+
+    	$.ajax({
+    		url: resource_url,
+    		dataType: 'json',
+    		type: 'POST',
+    		data: record,
+    		success: function(data){
+    			console.log('WTF?!');
+    		}
+    	});
+
+    	this.clear_form(ui_model);
+
+    	this.load_records();
+
+    }
+    
+    this.clear_form = function(ui_model){
+    	ui_model.children("input").each(function(i, field){
+    		$(field).attr("value", "");
+    	});
+    }
+    
+    this.load_records = function(){
+        var fields = this.fields;
+    	$.ajax({
+    		url: '/domains/${domain.id}/cname_records',
+    		dataType: 'json',
+    		success: function(data) {
+    			$("#SHOVEIT").html("");
+    			$.each(data, function(i, item){
+    				var model_wrapper = $("<div></div>");
+    				var model_guid = "aeon_" + createUUID();
+    				model_wrapper.attr("id", model_guid);
+    				model_wrapper.attr("resource_url", item.resource_url);
+    				model_wrapper.attr("class_name", item.class_name);
+
+    				for (var i=fields.length; i--;) {
+    					var input_wrapper = $('<input/>');
+    					input_wrapper.attr("onBlur", "update_model('" + model_guid + "')");
+    					input_wrapper.attr("key", fields[i]);
+    					input_wrapper.attr("value", item[fields[i]]);
+    					if(fields[i] == "id"){
+    						input_wrapper.attr("type", "hidden");
+    					} else {
+    						input_wrapper.attr("type", "text");
+    					}
+    					$(model_wrapper).append(input_wrapper);
+    				}
+
+    				var destroy = $("<div></div>");
+    				destroy.attr("onClick", "destroy_record('" + item.resource_url + "')");
+    				destroy.text("Delete");
+    				destroy.addClass("inline-block");
+    				model_wrapper.append(destroy);
+    				$("#SHOVEIT").append(model_wrapper);
+
+    			});
+    		},
+
+    		error: function() {
+    			console.log('WHOOPS');
+    		}
+    	});
+    }
+    
+    this.destroy_record = function(resource_url){
+    	$.ajax({
+    		url: resource_url,
+    		type: "DELETE",
+    		success: function(data){
+    			self.load_records();
+    		}
+    	});
+    }
+    
+    this.build_json = function(ui_model) {
+    	var class_name = ui_model.attr("class_name");
+
+    	var record = new Object();
+    	var attributes = new Object();
+
+    	ui_model.children("input").each(function(i, field){
+    		var key = $(field).attr("key");
+    		var value = $(field).attr("value");
+    		attributes[key] = value;
+    	});
+
+    	record[class_name] = attributes;
+
+    	return record;
+    }
+    
+    this.update_model = function(ui_id) {
+    	var ui_model = $('#' + ui_id);
+    	var resource_url = ui_model.attr("resource_url");
+    	var record = this.build_json(ui_model);
+
+    	$.ajax({
+    		url: resource_url,
+    		dataType: 'json',
+    		type: 'PUT',
+    		data: record,
+    		success: function(data){
+    			console.log('WTF?!');
+    		}
+    	});
+
+    }
+    
+    this.init = function() {
+        this.new_record_form();
+        $("#ADDFORM").append(this.new_record_form());
+    	this.load_records();
+    }
+    
+}
+
+var MxRecordModel = new Aeon.UI.Model();
+MxRecordModel.fields = [
 	'target',
 	'hostname',
 	'id'
 ];
-
-var new_record_form = $("<div></div>");
-var new_record_uuid = "aeon_" + createUUID();
-
-new_record_form.attr("id", new_record_uuid);
-new_record_form.attr("resource_url", "/cname_records");
-new_record_form.attr("class_name", "cname_record");
-
-
-
-for (var i=fields.length; i--;) {
-	var input_wrapper = $('<input/>');
-	input_wrapper.attr("key", fields[i]);
-	input_wrapper.attr("placeholder", fields[i]);
-	if(fields[i] == "id"){
-		input_wrapper.attr("type", "hidden");
-	} else {
-		input_wrapper.attr("type", "text");
-	}
-	$(new_record_form).append(input_wrapper);
-}
-var domain_id_input = $('<input/>');
-domain_id_input.attr("key", "domain_id");
-domain_id_input.attr("value", "${domain.id}");
-domain_id_input.attr("type", "hidden");
-$(new_record_form).append(domain_id_input);
-
-var new_record_button = $("<button></button>");
-new_record_button.text("Add");
-new_record_button.attr("onClick", "add_record('" + new_record_uuid + "')");
-$(new_record_form).append(new_record_button);
-
-
-var add_record = function(ui_id){
-	var ui_model = $('#' + ui_id);
-	var resource_url = ui_model.attr("resource_url");
-	var record = build_json(ui_model);
-	
-	console.log(record);
-	
-	$.ajax({
-		url: resource_url,
-		dataType: 'json',
-		type: 'POST',
-		data: record,
-		success: function(data){
-			console.log('WTF?!');
-		}
-	});
-	
-	clear_form(ui_model);
-	
-	load_records();
-	
-}
-
-var clear_form = function(ui_model){
-	ui_model.children("input").each(function(i, field){
-		$(field).attr("value", "");
-	});
-}
-
-var load_records = function(){
-	$.ajax({
-		url: '/domains/${domain.id}/cname_records',
-		dataType: 'json',
-		success: function(data) {
-			$("#SHOVEIT").html("");
-			$.each(data, function(i, item){
-				var model_wrapper = $("<div></div>");
-				var model_guid = "aeon_" + createUUID();
-				model_wrapper.attr("id", model_guid);
-				model_wrapper.attr("resource_url", item.resource_url);
-				model_wrapper.attr("class_name", item.class_name);
-			
-				for (var i=fields.length; i--;) {
-					var input_wrapper = $('<input/>');
-					input_wrapper.attr("onBlur", "update_model('" + model_guid + "')");
-					input_wrapper.attr("key", fields[i]);
-					input_wrapper.attr("value", item[fields[i]]);
-					if(fields[i] == "id"){
-						input_wrapper.attr("type", "hidden");
-					} else {
-						input_wrapper.attr("type", "text");
-					}
-					$(model_wrapper).append(input_wrapper);
-				}
-				
-				var destroy = $("<div></div>");
-				destroy.attr("onClick", "destroy_record('" + item.resource_url + "')");
-				destroy.text("Delete");
-				destroy.addClass("inline-block");
-				model_wrapper.append(destroy);
-				$("#SHOVEIT").append(model_wrapper);
-			
-			});
-		},
-				
-		error: function() {
-			console.log('WHOOPS');
-		}
-	});
-}
-
-var destroy_record = function(resource_url){
-	$.ajax({
-		url: resource_url,
-		type: "DELETE",
-		success: function(data){
-			load_records();
-		}
-	});
-}
-
-
-var build_json = function(ui_model) {
-	var class_name = ui_model.attr("class_name");
-	
-	var record = new Object();
-	var attributes = new Object();
-	
-	ui_model.children("input").each(function(i, field){
-		var key = $(field).attr("key");
-		var value = $(field).attr("value");
-		attributes[key] = value;
-	});
-	
-	record[class_name] = attributes;
-	
-	return record;
-}
-
-var update_model = function(ui_id) {
-	var ui_model = $('#' + ui_id);
-	var resource_url = ui_model.attr("resource_url");
-	var record = build_json(ui_model);
-	
-	$.ajax({
-		url: resource_url,
-		dataType: 'json',
-		type: 'PUT',
-		data: record,
-		success: function(data){
-			console.log('WTF?!');
-		}
-	});
-	
-}
-
+MxRecordModel.container = $("#stuff_wrapper");
 
 $(document).ready(function(){
-	$("#ADDFORM").append(new_record_form);
-	load_records();
+MxRecordModel.init();
 });
 
 </script>
