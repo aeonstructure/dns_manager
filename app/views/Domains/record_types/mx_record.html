@@ -1,145 +1,26 @@
-<script type="text/javascript">
-  MX_Records = SC.Application.create();
-	  
-	  /* Model */
-	  MX_Records.Record = SC.Object.extend({
-	  	resource_url: '',
-	  	id: '',
-		domain_id: '${domain.id}',
-	  	hostname: '',
-	  	priority: '',
-	  	target: '',
-		
-		attributes: function(){
-		    return {
-			  id: this.get('id'),
-			  domain_id: this.get('domain_id'),
-		      hostname: this.get('hostname'),
-			  priority: this.get('priority'),
-		      target: this.get('target')
-		    };
-		  }.property('id', 'hostname', 'priority', 'target').cacheable(),
-		
-		save: function() {
-			var self = this;
-			
-			var ember_object = {mx_record:this.get('attributes')};
-			
-			$.ajax({
-				url: self.get('resource_url'),
-				data: ember_object,
-				type: "PUT",
-				dataType: "json",
-				success: function(data) {
-					console.log('object saved');
-				}
-			});
-		},
-		
-		create: function() {
-		var self = this;
-			
-		var ember_object = {mx_record:this.get('attributes')};
-		
-		$.ajax({
-			url: '/mx_records',
-			data: ember_object,
-			type: "POST",
-			dataType: "json",
-			success: function(data) {
-				console.log('object created');
-			}
-		});
-			
-		},
-		
-		autosave: function() {
-			this.save();
-		}.observes('attributes')
-		
-	  });
-	  
-	  /* Controllers */
-      MX_Records.RecordController = SC.ArrayController.create({
-	  	content: [],
-		
-		sortedContent: function(){
-			var content = this.get('content');
-			
-			return content.slice().sort(function(a, b) {
-				var hostname_a = a.get('hostname'),
-					hostname_b = b.get('hostname');
-				
-				if (!hostname_a && hostname_b) { return 1; }
-				if (!hostname_b && hostname_a) { return -1; }
-				if (hostname_a < hostname_b) { return -1; }
-				if (hostname_a > hostname_b) { return 1; }
-				return 0;	
-			});
-		}.property('@each.hostname').cacheable(),
-		
-		newRecord: function() {
-			var new_record = MX_Records.Record.create({
-				domain_id: '${domain.id}',
-				hostname: $('#NewMXHostname').val(),
-				priority: $('#NewMXPriority').val(),
-				target: $('#NewMXTarget').val()
-			});
-			
-			this.pushObject(new_record);
-			
-			new_record.create();
-		},
-		
-		loadRecords: function() {
-			var self = this;
-			$.ajax({
-				url: '/domains/${domain.id}/mx_records',
-				dataType: 'json',
-				success: function(data) {
-					records = data.map(function(item) {
-						return self.createRecordFromJSON(item);
-					});
-					
-					self.set('content', records);
-				},
-				
-				error: function() {
-					console.log('WHOOPS');
-				}
-			});
-		},
-		
-		createRecordFromJSON: function(json) {
-			return MX_Records.Record.create(json);
-		}
-      });
-	  
-	  MX_Records.newRecordView = Ember.View.extend({
-	  	
-	  });
-	  
-	  MX_Records.RecordController.loadRecords();
-	  	
-</script>
+<div id='mx_wrapper' class="stuff_wrapper">
 
-<script type="text/x-handlebars">
+	<div id="ADDFORM">
+	</div>
 
-<input type="text" id="NewMXHostname" placeholder="hostname"/>
-<input type="text" id="NewMXPriority" placeholder="priority"/>
-<input type="text" id="NewMXTarget" placeholder="target"/>
+	<div id="LIST">
+	</div>
 
-{{#view Ember.Button action="newRecord" target="MX_Records.RecordController"}}
-Add
-{{/view}}
+</div>
 
-<ul>
-      {{#each MX_Records.RecordController.content}}
-	  	<li>
-		{{view Ember.TextField valueBinding="hostname"}}
-		{{view Ember.TextField valueBinding="priority"}}
-		{{view Ember.TextField valueBinding="target"}}
-		</li>
-	  {{/each}}
-</ul>
+<script>
+var MxRecordModel = new Aeon.UI.Model();
+MxRecordModel.fields = [
+	'target',
+	'priority',
+	'hostname',
+	'id'
+];
+MxRecordModel.container = $("#mx_wrapper");
+MxRecordModel.base_url = "/domains/${domain.id}";
+MxRecordModel.class_name = "mx_record";
+MxRecordModel.name = "MxRecordModel";
+
+
+MxRecordModel.init();
 </script>

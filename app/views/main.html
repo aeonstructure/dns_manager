@@ -11,6 +11,9 @@
 		<script src="@{'/public/javascripts/json2.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 		<script src="@{'/public/javascripts/knockout-2.0.0.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 		<script src="@{'/public/javascripts/ember-0.9.3.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+		#{script 'utils.js' /}
+		#{script 'aeon-ui-model.js' /}
+    	
         #{get 'moreScripts' /}
     </head>
     <body>

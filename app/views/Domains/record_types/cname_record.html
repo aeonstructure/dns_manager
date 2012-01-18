@@ -1,28 +1,24 @@
-#{set 'moreScripts'}
-	#{get 'moreScripts' /}
-	#{script 'models/cname_record.js' /}
-#{/set}
+<div id='cname_wrapper' class="stuff_wrapper">
 
-<form data-bind="submit: addCNAME_Record">
-	<input data-bind="value: new_cname_record_hostname" placeholder="hostname" />
-	<input data-bind="value: new_cname_record_target" placeholder="host.${domain.name}." />
-	<input data-bind="value: domain_id" value="${domain.id}" type="hidden" />
-    <button type="submit">Add</button>
-</form>
+	<div id="ADDFORM">
+	</div>
 
-<ul data-bind="foreach: cname_records">
-    <li>
-        <input data-bind="value: hostname, valueUpdate: 'afterkeydown', event: { blur: $parent.saveCNAME_Record }" />
-		<input data-bind="value: target, valueUpdate: 'afterkeydown', event: { blur: $parent.saveCNAME_Record }" />
-        <a href="#" data-bind="click: $parent.removeCNAME_Record">Delete</a>
-    </li> 
-</ul>
+	<div id="LIST">
+	</div>
 
+</div>
 
-<script type="text/javascript">
+<script>
+var CnameRecordModel = new Aeon.UI.Model();
+CnameRecordModel.fields = [
+	'target',
+	'hostname',
+	'id'
+];
+CnameRecordModel.container = $("#cname_wrapper");
+CnameRecordModel.base_url = "/domains/${domain.id}";
+CnameRecordModel.class_name = "cname_record";
+CnameRecordModel.name = "CnameRecordModel";
 
-var domain_id = '${domain.id}';
-
-ko.applyBindings(new CNAME_RecordViewModel(), document.getElementById("cname_records"));
-
+CnameRecordModel.init();
 </script>
