@@ -1,0 +1,17 @@
+User(dennisharrison):
+    email:          dennisharrison@aeonstructure.com
+    password:       aeonstructure
+    fullname:       Dennis Harrison
+    isAdmin:        true
+    
+User(dmorrigan):
+    email:          dmorrigan@aeonstructure.com
+    password:       aeonstructure
+    fullname:       Dan Morrigan
+    isAdmin:        true
+    
+User(test):
+    email:          support@aeonstructure.com
+    password:       test
+    fullname:       Test Man
+    isAdmin:        true
