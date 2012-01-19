@@ -19,9 +19,17 @@ DomainRecordModel.fields = {
 	'id': {type: 'hidden'},
 	'selected': {domElement:'checkbox'}
 };
-DomainRecordModel.actions = {delete: true, edit: true};
+
+#{secure.check "admin"}
+DomainRecordModel.isAdmin = true;
+DomainRecordModel.actions.delete = true;
+DomainRecordModel.actions.edit = true;
+#{/secure.check}
+
 DomainRecordModel.container = $("#domain_wrapper");
 DomainRecordModel.class_name = "domain";
+
+console.log(DomainRecordModel.actions);
 
 DomainRecordModel.init();
 </script>

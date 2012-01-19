@@ -18,6 +18,7 @@ public class MX_Records extends Application {
         renderJSON(MX_Record.listToJsonString(mx_records));
     }
     
+	@Check("admin")
     public static void create(@Valid MX_Record mx_record) {
 		if(validation.hasErrors()) {
 			response.status = 400;
@@ -35,6 +36,7 @@ public class MX_Records extends Application {
         
     }
     
+	@Check("admin")
     public static void update(@Valid MX_Record mx_record) {
 		if(validation.hasErrors()) {
 			response.status = 400;
@@ -43,6 +45,7 @@ public class MX_Records extends Application {
         mx_record.save();
     }
     
+	@Check("admin")
     public static void destroy(Long id) {
         MX_Record mx_record = MX_Record.findById(id);
         mx_record.delete();

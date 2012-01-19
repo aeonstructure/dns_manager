@@ -20,5 +20,12 @@ ARecordModel.container = $("#a_wrapper");
 ARecordModel.base_url = "/domains/${domain.id}";
 ARecordModel.class_name = "a_record";
 
+#{secure.check "admin"}
+ARecordModel.isAdmin = true;
+ARecordModel.actions.delete = true;
+ARecordModel.actions.edit = true;
+#{/secure.check}
+
+
 ARecordModel.init();
 </script>

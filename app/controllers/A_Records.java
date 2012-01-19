@@ -18,6 +18,7 @@ public class A_Records extends Application {
         renderJSON(A_Record.listToJsonString(a_records));
     }
     
+	@Check("admin")
     public static void create(@Valid A_Record a_record) {
 		if(validation.hasErrors()) {
 			response.status = 400;
@@ -35,6 +36,7 @@ public class A_Records extends Application {
         
     }
     
+	@Check("admin")
     public static void update(@Valid A_Record a_record) {
 		if(validation.hasErrors()) {
 			response.status = 400;
@@ -43,6 +45,7 @@ public class A_Records extends Application {
         a_record.save();
     }
     
+	@Check("admin")
     public static void destroy(Long id) {
         A_Record a_record = A_Record.findById(id);
         a_record.delete();

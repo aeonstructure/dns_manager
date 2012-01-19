@@ -35,6 +35,7 @@ public class Domains extends Application {
 		render("@form", domain);
 	}
 	
+	@Check("admin")
 	public static void update(@Valid Domain domain) {
 		if(validation.hasErrors()) {
 			if(request.isAjax()) error("WRONG!");
@@ -44,6 +45,7 @@ public class Domains extends Application {
 		index();
 	}
 	
+	@Check("admin")
     public static void destroy(Long id) {
         Domain domain = Domain.findById(id);
         domain.delete();

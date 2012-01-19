@@ -24,6 +24,11 @@
         <a target='_blank' href='/@db'>Database Access</a> | <a href='/@documentation/home'>Documentation</a> | 
         <a href='/@tests'>Tests</a> | <a href='/'>Domain List</a> | <a href='#!watch'>Watch CSS</a>
         | <a href='#!unwatch'>UnWatch CSS</a>
+		| <a href='/logout'>Logout</a>
+		#{secure.check "admin"}
+		ADMIN ENABLED
+		#{/secure.check}
+		
       </div>
         #{doLayout /}
     </body>

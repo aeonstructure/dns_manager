@@ -14,4 +14,4 @@ User(test):
     email:          support@aeonstructure.com
     password:       test
     fullname:       Test Man
-    isAdmin:        true
+    isAdmin:        false

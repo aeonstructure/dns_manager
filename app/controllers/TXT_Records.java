@@ -18,6 +18,7 @@ public class TXT_Records extends Application {
         renderJSON(TXT_Record.listToJsonString(txt_records));
     }
     
+	@Check("admin")
     public static void create(@Valid TXT_Record txt_record) {
 		if(validation.hasErrors()) {
 			response.status = 400;
@@ -35,6 +36,7 @@ public class TXT_Records extends Application {
         
     }
     
+	@Check("admin")
     public static void update(@Valid TXT_Record txt_record) {
 		if(validation.hasErrors()) {
 			response.status = 400;
@@ -43,6 +45,7 @@ public class TXT_Records extends Application {
         txt_record.save();
     }
     
+	@Check("admin")
     public static void destroy(Long id) {
         TXT_Record txt_record = TXT_Record.findById(id);
         txt_record.delete();

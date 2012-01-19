@@ -93,6 +93,10 @@ Aeon.UI = function(model){
         var class_name          = options.class_name;
         var fields              = options.fields;
         
+		if(model.isAdmin == false){
+			return;
+		}
+		
         var keys = Object.keys(fields);
         var new_record_form = $("<div></div>");
         var new_record_uuid = id_prefix + createUUID();

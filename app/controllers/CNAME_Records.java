@@ -18,6 +18,7 @@ public class CNAME_Records extends Application {
         renderJSON(CNAME_Record.listToJsonString(cname_records));
     }
     
+	@Check("admin")
     public static void create(@Valid CNAME_Record cname_record) {
 		if(validation.hasErrors()) {
 			response.status = 400;
@@ -35,6 +36,7 @@ public class CNAME_Records extends Application {
         
     }
     
+	@Check("admin")
     public static void update(@Valid CNAME_Record cname_record) {
 		if(validation.hasErrors()) {
 			response.status = 400;
@@ -43,6 +45,7 @@ public class CNAME_Records extends Application {
         cname_record.save();
     }
     
+	@Check("admin")
     public static void destroy(Long id) {
         CNAME_Record cname_record = CNAME_Record.findById(id);
         cname_record.delete();

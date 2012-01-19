@@ -14,6 +14,7 @@ Aeon.UI.Model = function(){
     this.add_form           = true;
     this.add_form_id        = 'ADDFORM';
     this.records            = null;
+	this.isAdmin			= false;
     this.default_actions    = { 
         delete: {
             action_noun: 'click',
@@ -26,7 +27,7 @@ Aeon.UI.Model = function(){
                 text: 'Edit Records'
             },
     };
-    this.actions            = {delete: true};
+    this.actions            = {delete: false, edit: false};
     this.ui_helper          = new Aeon.UI(this);
     
     ModelRegistry.push(this);
@@ -61,11 +62,17 @@ Aeon.UI.Model = function(){
                         css_class: css_class,
                         type: type
                     }
-                    $(model_wrapper).append(self.ui_helper.input(options));
+				    
+					var input_element = self.ui_helper.input(options);
+					if(self.isAdmin == false) {
+				    	input_element.attr("disabled", "disabled");
+				    }
+					
+                    $(model_wrapper).append(input_element);
                   break;
                 case 'span':
                   var options = {
-                      action: ["blur", "update_resource('" + model_guid + "')"],
+                      action: [],
                       key: key_name,
                       value: item[key_name],
                       css_class: css_class,
@@ -79,7 +86,13 @@ Aeon.UI.Model = function(){
                           value: item[key_name],
                           css_class: css_class,
                       }
-                      $(model_wrapper).append(self.ui_helper.checkbox(options));
+					  
+  					var input_element = self.ui_helper.checkbox(options);
+  					if(self.isAdmin == false) {
+  				    	input_element.attr("disabled", "disabled");
+  				    }
+					
+                      $(model_wrapper).append(input_element);
                       break;
                 default:
                   console.log('The element type of ' + domElement + ' is not available.')
@@ -87,9 +100,14 @@ Aeon.UI.Model = function(){
 			}
             
             for (action in actions) {
-                if ($.inArray(action, self.default_actions)) {
+                if ($.inArray(action, self.default_actions) && actions[action] == true) {
                     actions[action] = self.default_actions[action];
                 }
+				if (actions[action] == false) {
+                	delete actions[action];
+					return;
+				}
+                
                 var a = actions[action];
                 var options = {}
 
