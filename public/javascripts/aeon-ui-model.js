@@ -12,6 +12,7 @@ Aeon.UI.Model = function(){
     this.base_url           = null;
     this.id_prefix          = "aeon_";
     this.add_form           = true;
+    this.add_form_id        = 'ADDFORM';
     this.records            = null;
     this.default_actions    = { 
         delete: {
@@ -71,6 +72,15 @@ Aeon.UI.Model = function(){
                   }
                   $(model_wrapper).append(self.ui_helper.span(options));
                   break;
+                case 'checkbox':
+                    var options = {
+                          action: ["blur", "update_resource('" + model_guid + "')"],
+                          key: key_name,
+                          value: item[key_name],
+                          css_class: css_class,
+                      }
+                      $(model_wrapper).append(self.ui_helper.checkbox(options));
+                      break;
                 default:
                   console.log('The element type of ' + domElement + ' is not available.')
                 }

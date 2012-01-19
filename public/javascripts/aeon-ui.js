@@ -47,6 +47,23 @@ Aeon.UI = function(model){
 		return wrapper_ui;
     }
     
+    this.checkbox = function(options){
+        var action_noun = options.action[0];
+        var action_verb = options.action[1];
+        var key = options.key;
+        var value = options.value;
+        var css_class = options.css_class;
+        var wrapper_ui = $('<input/>');
+        
+		wrapper_ui.attr(action_noun, action_verb);
+		wrapper_ui.attr("type", 'checkbox');
+		wrapper_ui.attr("key", key);
+		wrapper_ui.text(value);
+		wrapper_ui.addClass(css_class);
+		
+		return wrapper_ui;
+    }
+    
     this.action = function(options){
         var action_noun = options.action_noun;
         var action_verb = options.action_verb;

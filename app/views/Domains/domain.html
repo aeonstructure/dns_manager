@@ -16,7 +16,8 @@ DomainRecordModel.fields = {
     'serial_number': {domElement: 'span', css_class: 'serial_number_span center_text'},
 	'responsible_party': {},
 	'name': {},
-	'id': {type: 'hidden'}
+	'id': {type: 'hidden'},
+	'selected': {domElement:'checkbox'}
 };
 DomainRecordModel.actions = {delete: true, edit: true};
 DomainRecordModel.container = $("#domain_wrapper");

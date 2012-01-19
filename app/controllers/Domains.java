@@ -51,27 +51,35 @@ public class Domains extends Application {
     }
 	
 	public static void a_records(Long id) {
-        List<A_Record> a_records;
+        List<A_Record> records;
         Domain domain;
         domain = Domain.findById(id);
-        a_records = domain.a_records;
-        renderJSON(A_Record.listToJsonString(a_records));
+        records = domain.a_records;
+        renderJSON(A_Record.listToJsonString(records));
 	}
 	
 	public static void cname_records(Long id) {
-        List<CNAME_Record> cname_records;
+        List<CNAME_Record> records;
         Domain domain;
         domain = Domain.findById(id);
-        cname_records = domain.cname_records;
-        renderJSON(CNAME_Record.listToJsonString(cname_records));
+        records = domain.cname_records;
+        renderJSON(CNAME_Record.listToJsonString(records));
 	}
 	
 	public static void mx_records(Long id) {
-        List<MX_Record> mx_records;
+        List<MX_Record> records;
         Domain domain;
         domain = Domain.findById(id);
-        mx_records = domain.mx_records;
-        renderJSON(CNAME_Record.listToJsonString(mx_records));
+        records = domain.mx_records;
+        renderJSON(MX_Record.listToJsonString(records));
+	}
+	
+	public static void txt_records(Long id) {
+        List<TXT_Record> records;
+        Domain domain;
+        domain = Domain.findById(id);
+        records = domain.txt_records;
+        renderJSON(TXT_Record.listToJsonString(records));
 	}
 	
 	
